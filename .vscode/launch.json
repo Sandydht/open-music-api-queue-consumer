@@ -9,7 +9,7 @@
       "skipFiles": [
         "<node_internals>/**"
       ],
-      "program": "${workspaceFolder}/src/server.js",
+      "program": "${workspaceFolder}/src/consumer.js",
       "envFile": "${workspaceFolder}/.env",
       "runtimeExecutable": "node",
       "runtimeVersion": "16"

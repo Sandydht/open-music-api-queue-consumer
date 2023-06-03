@@ -18,4 +18,5 @@ const init = async () => {
 
   channel.consume('export:playlists', listener.listen, { noAck: true });
 };
+
 init();
