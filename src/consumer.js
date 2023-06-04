@@ -1,7 +1,6 @@
 require('dotenv').config();
-const config = require('./utils/config');
-
 const amqp = require('amqplib');
+const config = require('./utils/config');
 const PlaylistsService = require('./PlaylistsService');
 const MailSender = require('./MailSender');
 const Listener = require('./Listener');

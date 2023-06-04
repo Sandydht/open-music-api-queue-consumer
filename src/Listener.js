@@ -13,8 +13,10 @@ class Listener {
 
       const playlists = await this.playlistsService.getPlaylists(userId);
       const result = await this.mailSender.sendEmail(targetEmail, JSON.stringify(playlists));
+      // eslint-disable-next-line no-console
       console.log(result);
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(error);
     }
   }

@@ -12,7 +12,7 @@ class PlaylistsService {
     };
 
     const result = await this.pool.query(query);
-    result.rows;
+    return result.rows;
   }
 }
 
