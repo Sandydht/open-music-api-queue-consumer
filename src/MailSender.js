@@ -1,13 +1,14 @@
 const nodemailer = require('nodemailer');
+const config = require('./utils/config');
 
 class MailSender {
   constructor() {
     this.transporter = nodemailer.createTransport({
-      host: process.env.MAIL_HOST,
-      port: process.env.MAIL_PORT,
+      host: config.mailtrap.host,
+      port: config.mailtrap.port,
       auth: {
-        user: process.env.MAIL_ADDRESS,
-        pass: process.env.MAIL_PASSWORD,
+        user: config.mailtrap.address,
+        pass: config.mailtrap.password,
       },
     });
   }
