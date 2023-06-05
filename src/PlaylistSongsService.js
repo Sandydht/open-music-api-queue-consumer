@@ -1,18 +1,20 @@
 const { Pool } = require('pg');
+const songsTransform = require('./transformers/songs');
 
 class PlaylistSongsService {
   constructor() {
     this.pool = new Pool();
   }
 
-  async getPlaylistSongsByUserId(userId) {
+  async getPlaylistSongsByPlaylistId(playlistId) {
     const query = {
-      text: 'SELECT songs.id, songs.title, songs.performer, playlist_songs.playlist_id FROM songs LEFT JOIN playlist_songs ON playlist_songs.song_id = songs.id LEFT JOIN playlists ON playlists.id = playlist_songs.playlist_id LEFT JOIN collaborations ON collaborations.playlist_id = playlists.id WHERE playlists.owner = $1 OR collaborations.user_id = $1',
-      values: [userId],
+      text: 'SELECT songs.* FROM songs INNER JOIN playlist_songs ON songs.id = playlist_songs.song_id WHERE playlist_songs.playlist_id = $1 GROUP BY songs.id',
+      values: [playlistId],
     };
 
-    const result = await this.pool.query(query);
-    return result.rows;
+    const playlistSongs = await this.pool.query(query);
+    const result = songsTransform.songList(playlistSongs.rows);
+    return result;
   }
 }
 

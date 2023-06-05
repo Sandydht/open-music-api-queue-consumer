@@ -1,6 +1,4 @@
 const autoBind = require('auto-bind');
-const mapDbToModel = require('./utils/mapDbToModel');
-const playlistsTransform = require('./transformers/playlists');
 
 class Listener {
   constructor(playlistsService, playlistSongsService, mailSender) {
@@ -12,20 +10,15 @@ class Listener {
 
   async listen(message) {
     try {
-      const { userId, targetEmail } = JSON.parse(message.content.toString());
+      const { playlistId, targetEmail } = JSON.parse(message.content.toString());
 
-      const [playlists, playlistSongs] = await Promise.all([
-        this.playlistsService.getPlaylists(userId),
-        this.playlistSongsService.getPlaylistSongsByUserId(userId),
+      const [playlist, songs] = await Promise.all([
+        this.playlistsService.getPlaylistById(playlistId),
+        this.playlistSongsService.getPlaylistSongsByPlaylistId(playlistId),
       ]);
 
-      const mapDbResult = mapDbToModel(playlists, playlistSongs);
-      const playlistWithSongs = playlistsTransform.playlistWithSongs(mapDbResult);
-
-      const result = await this.mailSender.sendEmail(
-        targetEmail,
-        JSON.stringify(playlistWithSongs),
-      );
+      playlist.songs = songs;
+      const result = await this.mailSender.sendEmail(targetEmail, JSON.stringify(playlist));
       // eslint-disable-next-line no-console
       console.log(result);
     } catch (error) {
