@@ -18,7 +18,7 @@ class Listener {
       ]);
 
       playlist.songs = songs;
-      const result = await this.mailSender.sendEmail(targetEmail, JSON.stringify(playlist));
+      const result = await this.mailSender.sendEmail(targetEmail, JSON.stringify({ playlist }));
       // eslint-disable-next-line no-console
       console.log(result);
     } catch (error) {

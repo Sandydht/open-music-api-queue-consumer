@@ -8,7 +8,7 @@ class PlaylistsService {
 
   async getPlaylistById(id) {
     const query = {
-      text: 'SELECT * FROM users INNER JOIN playlists ON users.id = playlists.owner WHERE playlists.id = $1',
+      text: 'SELECT * FROM playlists WHERE id = $1',
       values: [id],
     };
 
