@@ -4,7 +4,6 @@
   "description": "",
   "main": "./src/consumer.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint ./src",
     "start": "node ./src/consumer.js"
   },
